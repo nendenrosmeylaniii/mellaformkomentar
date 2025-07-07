@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulir Komentar Dinamis</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #ffe6f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    .container {
+      background-color: #fff0f5;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      color: #d63384;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #b03060;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ffb6c1;
+      border-radius: 8px;
+      resize: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #ff69b4;
+      outline: none;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+    }
+
+    .komentar-list {
+      margin-top: 30px;
+    }
+
+    .komentar-card {
+      background-color: #ffe0ec;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(255, 182, 193, 0.3);
+    }
+
+    .komentar-nama {
+      font-weight: bold;
+      color: #b03060;
+    }
+
+    .komentar-waktu {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .komentar-isi {
+      margin-top: 8px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>FORMULIR KOMENTAR</h2>
+    <h2>Nenden Rosmeylani</h2>
+
+    <div class="form-group">
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama" placeholder="Masukkan nama Anda" />
+    </div>
+
+    <div class="form-group">
+      <label for="komentar">Komentar:</label>
+      <textarea id="komentar" rows="4" placeholder="Tulis komentar Anda..."></textarea>
+    </div>
+
+    <button onclick="kirimKomentar()">Kirim</button>
+
+    <div class="komentar-list" id="daftarKomentar"></div>
+  </div>
+
+  <script>
+    function kirimKomentar() {
+      const nama = document.getElementById("nama").value.trim();
+      const komentar = document.getElementById("komentar").value.trim();
+      const daftar = document.getElementById("daftarKomentar");
+
+      if (!nama || !komentar) {
+        alert("Nama dan komentar harus diisi!");
+        return;
+      }
+
+      const waktu = new Date().toLocaleString("id-ID", {
+        day: "numeric", month: "long", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+      });
+
+      const card = document.createElement("div");
+      card.className = "komentar-card";
+
+      card.innerHTML = `
+        <div class="komentar-nama">${nama}</div>
+        <div class="komentar-waktu">${waktu}</div>
+        <div class="komentar-isi">${komentar}</div>
+      `;
+
+      daftar.prepend(card); // komentar terbaru di atas
+
+      // Reset form
+      document.getElementById("nama").value = "";
+      document.getElementById("komentar").value = "";
+    }
+  </script>
+</body>
+</html>
